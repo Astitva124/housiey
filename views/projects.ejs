@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+
+    
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Published Projects | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        
+        <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="assets/libs/%40chenfengyuan/datepicker/datepicker.min.css">
+        <link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        
+
+
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <%- include('templates/admin-navbar') %> 
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%- include('templates/left-sidebar') %> 
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                    
+
+                        <!-- Upload FIles and Vide Sections -->                        
+                        <div class="row">
+                            
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Published Projects</h4>
+                                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                            <thead>
+                                            <tr>
+                                                <th>Project Name</th>
+                                                <th>City</th>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Configurations</th>
+                                                <th>Projects</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <% projects.forEach(function(project){ %>
+                                                    <tr>
+                                                        
+                                                            <td><a href="#"><%= project.project_name %> </a></td>
+                                                            <td><%= project.city %></td>
+                                                            <td><%= project.location %></td>
+                                                            <td><%= project.create_datetime %></td>
+                                                            <td>
+                                                                <a class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-outline-secondary btn-sm edit" title="Block">
+                                                                    <i class="fas fa-ban"></i>
+                                                                </a>
+                                                                <a class="btn btn-outline-secondary btn-sm edit" title="Delete">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </td>
+                                                    
+                                                    </tr>
+                                                    <% }) %>
+                                                                     
+                                            </tbody>
+                                        </table>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+
+                        </div> <!-- end row -->
+                        
+                       
+                    </div>
+                </div>
+                <!-- End Page-content -->
+
+                <%- include('templates/footer') %> 
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- Add Builder Modal -->
+        <%- include('templates/builderModal') %> 
+
+
+   
+
+        <!-- JAVASCRIPT -->
+        <script src="assets/libs/jquery/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+
+        <script src="assets/libs/select2/js/select2.min.js"></script>
+        <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+        <script src="assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+        <script src="assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+
+        <!-- form advanced init -->
+        <!-- <script src="assets/js/pages/form-advanced.init.js"></script> -->
+        <!-- jquery step -->
+        <script src="assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+        
+
+
+        
+        <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+        <!-- form wizard init -->
+        <script src="assets/js/pages/form-wizard.init.js"></script>
+
+        
+
+        <!--tinymce js-->
+        <script src="assets/libs/tinymce/tinymce.min.js"></script>
+
+        <!-- init js -->
+        <script src="assets/js/pages/form-editor.init.js"></script>
+        <!-- form repeater js -->
+        <script src="assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+        <script src="assets/js/pages/form-repeater.int.js"></script>
+
+        <script src="assets/js/app.js"></script>
+        
+
+    </body>
+
+</html>

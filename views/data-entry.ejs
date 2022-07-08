@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+
+
+    
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Data Entry | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        
+        <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="assets/libs/%40chenfengyuan/datepicker/datepicker.min.css">
+        <link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        
+
+
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box">
+                            <!-- <a href="#" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo.svg" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-dark.png" alt="" height="17">
+                                </span>
+                            </a> -->
+
+                            <a href="#" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo1.png" alt="" height="60">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo1.png" alt="" height="50">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+
+                        
+                    </div>
+
+                    <div class="d-flex">
+
+
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1" key="t-henry">Admin</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <!-- <div class="dropdown-menu dropdown-menu-end">
+                                
+                                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
+                                <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">My Wallet</span></a>
+                                <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a>
+                                <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
+                            </div> -->
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <div data-simplebar class="h-100">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title" key="t-menu">Menu</li>
+                            <li>
+                                <a href="index.html" class="waves-effect">
+                                    <i class="bx bx-home-circle"></i>
+                                    <span key="t-projects">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-user"></i>
+                                    <span key="t-ecommerce">Representtive</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="city-head.html" key="t-products">City Head</a></li>
+                                    <li><a href="data-entry.html" key="t-product-detail">Data Entry</a></li>
+                                    <li><a href="sales-person.html" key="t-orders">Sales Person</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-user"></i>
+                                    <span key="t-ecommerce">Enquiries</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="signup-enquiry.html" key="t-products">Signup Enquiries</a></li>
+                                    <li><a href="online-enquiry.html" key="t-product-detail">Presentation Enquiries</a></li>
+                                    <li><a href="site-visit-enquiry.html" key="t-orders">Site Visit Enquiries</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="users.html" class="waves-effect">
+                                    <i class="bx bx-user"></i>
+                                    <span key="t-projects">Users</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="referrals.html" class="waves-effect">
+                                    <i class="bx bx-share"></i>
+                                    <span key="t-projects">Referrals</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="projects.html" class="waves-effect">
+                                    <i class="bx bx-briefcase-alt-2"></i>
+                                    <span key="t-projects">Published Projects</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                    
+                       <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-4">Register Data Entry Representatives</h5>
+
+                                        <form class="row gy-2 gx-3 align-items-center" action="dataEntry/addDataEntry", method="post" >
+                                            <div class="col-sm-auto">
+                                                <!-- <label class="visually-hidden" for="autoSizingInput">Name</label> -->
+                                                <input type="text" class="form-control" id="autoSizingInput" name="name" placeholder="Enter Name">
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <!-- <label class="visually-hidden" for="autoSizingInputGroup">Username</label> -->
+                                                <div class="input-group">
+                                                    <!-- <div class="input-group-text">@</div> -->
+                                                    <input type="text" class="form-control" id="autoSizingInputGroup" name="email" placeholder="Enter Email">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <!-- <label class="visually-hidden" for="autoSizingInputGroup">Username</label> -->
+                                                <div class="input-group">
+                                                    <!-- <div class="input-group-text">@</div> -->
+                                                    <input type="number" class="form-control" id="autoSizingInputGroup" name="mobile" placeholder="Enter Mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <label class="visually-hidden" for="autoSizingSelect">City</label>
+                                                <select class="form-select" name="city" id="autoSizingSelect">
+                                                    <option selected>Choose City...</option>
+                                                    <option value="Mumbai">Mumbai</option>
+                                                    <option value="Pune">Pune</option>
+                                                    <option value="Banglore">Banglore</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <button type="submit" class="btn btn-primary w-md">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- start page title -->
+                        <!-- end page title -->
+
+                        <!-- Upload FIles and Vide Sections -->                        
+                        <div class="row">
+                            
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Data Entry Representatives</h4>
+                                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>City</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% dataEntries.forEach(function(dataEntry){ %>
+                                                    <tr>
+                                                        <td><%= dataEntry.name %> </td>
+                                                        <td><%= dataEntry.email %></td>
+                                                        <td><%= dataEntry.mobile %></td>
+                                                        <td><%= dataEntry.city %></td>
+                                                        <td>
+                                                            <a class="btn btn-outline-secondary btn-sm edit"  title="Edit" onclick="fetchData('<%=dataEntry.id%>')">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a class="btn btn-outline-secondary btn-sm edit" title="Block" onclick="blockUser('<%=dataEntry.id%>')">
+                                                                <i class="fas fa-ban"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+
+                        </div> <!-- end row -->
+                        
+                       
+                    </div>
+                </div>
+                <!-- End Page-content -->
+
+                
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © Housiey.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Design & Develop by TechCarrel LLP
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- Add Builder Modal -->
+        <div class="modal fade" id="add-builder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add Builder</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-firstname-input">Builder name*</label>
+                                        <input type="text" class="form-control" id="verticalnav-firstname-input" placeholder="Enter Your Project Name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">City*</label>
+                                        <select class="form-select">
+                                            <option>Select</option>
+                                            <option>Large select</option>
+                                            <option>Small select</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-address-input">Builder Description</label>
+                                        <textarea id="verticalnav-address-input" class="form-control" rows="2" placeholder="Enter Your Address"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-phoneno-input">Established Year</label>
+                                        <input class="form-control" type="month" value="2019-08" id="example-month-input">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-phoneno-input">Total Experience</label>
+                                        <input type="number" class="form-control" id="verticalnav-phoneno-input" placeholder="only numbers">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-phoneno-input">Total Complete Projects</label>
+                                        <input type="number" class="form-control" id="verticalnav-phoneno-input" placeholder="only numbers">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-phoneno-input">Happy Families</label>
+                                        <input type="number" class="form-control" id="verticalnav-phoneno-input" placeholder="only numbers">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label for="verticalnav-address-input">Upload Logo</label>
+                                        <input class="form-control" type="file" id="formFile">
+                                    </div>
+                                </div>
+                            </div>                 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit sales persons details</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" name="id" id="id" >
+                      </div>
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="email" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" id="email">
+                      </div>
+                      <div class="mb-3">
+                        <label for="mobile" class="col-form-label">Mobile:</label>
+                        <input type="text" class="form-control" id="mobile">
+                      </div>
+                      <div class="mb-3">
+                        <label for="city" class="col-form-label">City:</label>
+                        <input type="text" class="form-control" id="city">
+                      </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="modalSubmit()">Submit</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        <!-- JAVASCRIPT -->
+        <script src="assets/libs/jquery/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+
+        <script src="assets/libs/select2/js/select2.min.js"></script>
+        <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+        <script src="assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+        <script src="assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+
+        <!-- form advanced init -->
+        <!-- <script src="assets/js/pages/form-advanced.init.js"></script> -->
+        <!-- jquery step -->
+        <script src="assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+        
+
+
+        
+        <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+        <!-- form wizard init -->
+        <script src="assets/js/pages/form-wizard.init.js"></script>
+
+        
+
+        <!--tinymce js-->
+        <script src="assets/libs/tinymce/tinymce.min.js"></script>
+
+        <!-- init js -->
+        <script src="assets/js/pages/form-editor.init.js"></script>
+        <!-- form repeater js -->
+        <script src="assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+        <script src="assets/js/pages/form-repeater.int.js"></script>
+
+
+        <script>
+
+            let baseURL = "http://localhost:3000"
+            function fetchData(id){
+                // data-bs-toggle="modal" data-bs-target="#exampleModal"
+                $('#exampleModal').modal('show')
+
+               
+                fetch(`${baseURL}/dataEntry/get_dataEntry_by_id`,{
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({"id":id}),
+                
+                })
+                 .then( async (response) =>{ 
+                     
+                    let data = await response.json()
+                    console.log(data[0]);
+                    document.getElementById("id").value = id;
+                    document.getElementById("name").value = data[0].name;
+                    document.getElementById("email").value = data[0].email;
+                    document.getElementById("mobile").value = data[0].mobile;
+                    document.getElementById("city").value = data[0].city
+                })
+            }
+
+            function modalSubmit(e){
+                 
+                let data = {
+                    "id": document.getElementById("id").value,
+                    "name": document.getElementById("name").value,
+                    "email": document.getElementById("email").value,
+                    "mobile": document.getElementById("mobile").value,
+                    "city": document.getElementById("city").value
+                }
+                fetch(`${baseURL}/dataEntry/update`, {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                }).then(data=>{
+                    $('#exampleModal').modal('hide')
+                    window.location.reload();
+                })
+            }
+
+            function blockUser(id){
+                fetch(`${baseURL}/dataEntry/block`,{
+                    method: "post",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({"id":id})
+                }).then(data=>{
+                      window.location.reload();
+                })
+            }
+        </script>
+
+
+
+        <script src="assets/js/app.js"></script>
+        
+
+    </body>
+
+</html>

@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesbrand.com/skote-django/layouts/dashboard-saas.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Dec 2021 14:35:57 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Dashboard | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/assets/images/favicon.ico">
+
+        <!-- Bootstrap Css -->
+        <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+         <link rel="stylesheet" href="/resources/demos/style.css">
+        <style>
+            .form-control{
+                width: 90%;
+            }
+
+            #donutchart  .apexcharts-legend{
+                display:none 
+            }
+        </style>
+
+                
+        <%if(USERTYPE==2){%>
+            <style>
+                #cityfilter{
+                    display:none;
+                }
+            </style>
+        <%}%>
+
+        <%if(USERTYPE==3){%>
+            <style>
+                #cityfilter{
+                    display:none;
+                }
+                #SPid{
+                    display:none;
+                }
+            </style>
+        <%}%>
+
+
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <%- include('templates/admin-navbar') %> 
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+                     
+            <%- include('templates/left-sidebar') %> 
+            <!-- Left Sidebar End -->     
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <img src="/assets/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle img-thumbnail">
+                                                    </div>
+                                                    <div class="flex-grow-1 align-self-center">
+                                                        <div class="text-muted">
+                                                            <p class="mb-2">Welcome to Housiey Dashboard</p>
+                                                            <!-- <h5 class="mb-1">Admin</h5> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                        
+                                        </div>
+                                        <!-- end row -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                    <form  id="myform" class="row gy-2 gx-3 align-items-center" action="/dashboard"  method="get" >
+                                                        
+                                                        <div class="col ">
+                                                            <input type="number" hidden class="form-control" value="1" name="filter">
+                                                            <select class="form-select w-auto " onchange="openDatepicker()" aria-label="Default select example" name="date" id="datefilter">
+                                                                <option  value=1>Current Month</option>
+                                                                <option  value=3>Last 3 Month</option>
+                                                                <option  value="custom">Custom Range</option>  
+                                                            </select>
+                                                        </div>
+                                                         
+                                                       
+                                                        <div class="col ">
+                                                            <select class="form-select w-auto "  aria-label="Default select example" onchange="getData(this.value)" name="cityid" id="cityfilter">
+                                                                <option  value="null">All Cities</option>
+                                                            </select>
+                                                        </div> 
+                                                        <div class="col">
+                                                            <select class="form-select w-auto "   aria-label="Default select example" name="SPid" id="SPid">
+                                                                <option  value="null">All Salespersons</option>
+                                                            </select>
+                                                        </div>
+                                                        
+
+                                                        <div class="col">
+                                                            <button type="submit" id="Add_button" class="form-control btn btn-success w-md" >Filter</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="form-control btn btn-warning w-md" onclick="clearFilter()" >Reset</button>
+                                                        </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                           
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-copy-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Total Leads</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totalLeads[0].count %> </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-purchase-tag-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Site Visits</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totalSiteVisits[0].count %> </h4>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-purchase-tag-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Online Presentations</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totalOnlinePresnt[0].count %> </h4>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-purchase-tag-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Booked</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totalbooked[0].count %> </h4>
+                                                    
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-purchase-tag-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Token</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totaltoken[0].count %> </h4>
+                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="avatar-xs me-3">
+                                                        <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18">
+                                                            <i class="bx bx-purchase-tag-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="font-size-14 mb-0">Dead</h5>
+                                                </div>
+                                                <div class="text-muted mt-4">
+                                                    <h4><%= totaldead[0].count %> </h4>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end row -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="clearfix">
+                                            
+                                            
+                                            <div class="row">
+                                                <h4 class="card-title mb-4 col-2">Enquiry Analytics</h4>
+                                                <div class="col-5">
+                                                    <div class="row input-group input-group-sm">
+                                                    
+                                                    <select class="form-select form-select-sm col" id="monthDropDown" onchange="getGraph()">
+                                                        <option value= 1>Jan</option>
+                                                        <option value= 2>Feb</option>
+                                                        <option value= 3>March</option>
+                                                        <option value= 4>April</option>
+                                                        <option value= 5>May</option>
+                                                        <option value= 6>Jun</option>
+                                                        <option value= 7>Jul</option>
+                                                        <option value= 8>Aug</option>
+                                                        <option value= 9>Sep</option>
+                                                        <option value= 10>Oct</option>
+                                                        <option value= 11>Nov</option>
+                                                        <option value= 12>Dec</option>
+                                                    </select>
+                                                    <label style="color:#808080;" class="input-group-text col-3">Month</label>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div class="col-5">
+                                                    <div class="row input-group input-group-sm">
+                                                    
+                                                    <select id="yearDropDown" class="form-select form-select-sm col" onchange="getGraph()">
+                                                    </select>
+                                                    <label style="color:#808080;"  class="input-group-text col-3">Year</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="col">
+                                                <div id="lineChart" class="apex-charts" dir="ltr"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Enquiry Status Analytics</h4>
+    
+                                            <div id="donutchart" style="height: 200px; width: 112%;"></div>
+                                            <div>
+
+
+
+                                                <table class="table">
+                                                    
+                                                    <tbody>
+                                                      <tr>
+                                                        
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #2E93fA;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Follow Up </span></td>
+                                                            <td><span class="dot" style="height: 10px;width: 10px;background-color: #E91E63;border-radius: 50%; display: inline-block;"></span>
+                                                                <span>Site Visits </span></td>
+                                                      
+                                                        
+                                                      </tr>
+                                                      <tr>
+                                                
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #546E7A;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Claim Disbursed </span></td>
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #03fc62;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Token </span></td>
+                                                       
+                                                      </tr>
+                                                      <tr>
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #ff0000;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Booked </span></td>
+                                                        
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #a103fc;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Dead </span></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color: #66DA26;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Registration Done </span></td>
+                                                        <td><span class="dot" style="height: 10px;width: 10px;background-color:  #FF9800;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Online Presentation </span></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>
+                                                            <span class="dot" style="height: 10px;width: 10px;background-color: #4800ff;border-radius: 50%; display: inline-block;"></span>
+                                                            <span>Fresh Leads</span>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                
+                <%- include('templates/footer') %> 
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <div class="right-bar">
+            <div data-simplebar class="h-100">
+                <div class="rightbar-title d-flex align-items-center px-3 py-4">
+            
+                    <h5 class="m-0 me-2">Settings</h5>
+
+                    <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+                        <i class="mdi mdi-close noti-icon"></i>
+                    </a>
+                </div>
+
+                <!-- Settings -->
+                <hr class="mt-0" />
+                <h6 class="text-center mb-0">Choose Layouts</h6>
+
+                <div class="p-4">
+                    <div class="mb-2">
+                        <img src="/assets/images/layouts/layout-1.jpg" class="img-thumbnail" alt="layout images">
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
+                        <label class="form-check-label" for="light-mode-switch">Light Mode</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="/assets/images/layouts/layout-2.jpg" class="img-thumbnail" alt="layout images">
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch">
+                        <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
+                    </div>
+    
+                    <div class="mb-2">
+                        <img src="/assets/images/layouts/layout-3.jpg" class="img-thumbnail" alt="layout images">
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch">
+                        <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+                    </div>
+
+                    <div class="mb-2">
+                        <img src="/assets/images/layouts/layout-4.jpg" class="img-thumbnail" alt="layout images">
+                    </div>
+                    <div class="form-check form-switch mb-5">
+                        <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
+                        <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+                    </div>
+
+            
+                </div>
+
+            </div> <!-- end slimscroll-menu-->
+        </div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+
+        <div class="modal" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title">Please Choose Dates</h6>
+                  <button type="button"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="myform2">
+                <div class="modal-body">
+                    <label for="selctedStartDate" class="form-label">Start Date:</label>
+                    <input type="date" required class="form-control" name="selctedStartDate" id="selctedStartDate" placeholder="Choose Date">
+                </div>
+                <div class="modal-body">
+                    <label for="selctedEndDate" class="form-label">End Date:</label>
+                    <input type="date" required class="form-control" name="selctedEndDate" id="selctedEndDate" placeholder="Choose Date">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-primary" >Select Range</button>
+                  </div>
+                
+              </div>
+            </form>
+            </div>
+        </div>
+
+        <div class="modal" id="exampleModal5" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title">Please Choose Filters</h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                  You need to choose atleast one filter to conduct a filter search
+                </p>
+                
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        <!-- JAVASCRIPT -->
+        <script src="/assets/libs/jquery/jquery.min.js"></script>
+        <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="/assets/libs/node-waves/waves.min.js"></script>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+        <!-- apexcharts -->
+       
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+        <!--  Saas dashboard init -->
+        <script src="/assets/js/pages/saas-dashboard.init.js"></script>
+        
+        <script src="/assets/js/app.js"></script>
+
+        <script>  
+
+
+        $(document).ready(function() {
+            $("#myform2")
+                .submit(function(e) {
+                    e.preventDefault();
+                    saveDate();
+                })
+                .validate({
+                    // Specify validation rules
+                    rules: {
+                        selctedStartDate: {
+                        required: true,
+                        },
+                        selctedEndDate: {
+                        required: true,
+                        }                
+                    },
+                    submitHandler: function(form) {
+                        
+                        return false;
+                    }
+                });
+        })
+
+            if('<%= selecteddate %>' !=1 && '<%= selecteddate %>' !=3 && '<%= selecteddate %>'!=''){
+
+                let dates = '<%= selecteddate %>'.split(",");
+                let startdate = formatDate(dates[0]);
+                let enddate = formatDate(dates[1]);
+
+                let selectedDateVal = startdate + " TO "+ enddate; 
+                $("#datefilter").append($('<option></option>').val('<%= selecteddate %>').html(`${selectedDateVal}`))
+
+                // console.log("--------------",selectedDateVal);
+            }
+
+              $("#datefilter option[value= '<%= selecteddate %>']").attr("selected", "selected");
+
+
+              let USERTYPE = "<%=USERTYPE%>";
+              if(USERTYPE == 2){
+                //   document.getElementById("cityfilter").style.display = "none";
+
+                  $( document ).ready(function() {   
+                  fetch(`<%=baseurl%>/leads/getSP?projectid=0`)   // fetching sales person data
+                  .then(async (response)=>{
+                      let data = await response.json();
+  
+                  //  console.log(data);
+                  var selectOption = $('#SPid');
+                  
+                  $.each(data, function (index, value) {
+                  
+                      selectOption.append(
+                        $('<option></option>').val(value.seller_id).html(value.name)
+                      );
+                  });
+                 
+                  
+                  $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                  getGraph(1);
+                  }) 
+              });
+              }
+              else if(USERTYPE == 3){
+                //   document.getElementById("cityfilter").style.display = "none";
+                //   document.getElementById("SPid").style.display = "none";
+                  
+                  getGraph(1);
+              }
+  
+  
+          else if(USERTYPE == 1){
+              $( document ).ready(function() {   
+                  fetch(`<%=baseurl%>/cityHeadDetails/allcity`)
+                  .then(async (response)=>{
+                      let data = await response.json();
+  
+                  //  console.log(data);
+                  var selectOption = $('#cityfilter');
+                  
+                  $.each(data, function (index, value) {
+                  
+                      selectOption.append(
+                          $('<option></option>').val(value.id).html(value.name)
+                      );
+                  });
+                  $(`#cityfilter option[value= '<%= selectedCity == undefined?"null": selectedCity %>']`).attr("selected", "selected");
+                  
+                  })
+              });
+  
+          $( document ).ready(function() {   
+                  fetch(`<%=baseurl%>/leads/getSP?projectid=0`)
+                  .then(async (response)=>{
+                      let data = await response.json();
+  
+                  //  console.log(data);
+                  var selectOption = $('#SPid');
+                  
+                  $.each(data, function (index, value) {
+                  
+                      selectOption.append(
+                          $('<option></option>').val(value.seller_id).html(value.name)
+                      );
+                  });
+                  
+                  
+                  $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                  let k = $("#SP")
+                  getGraph(1);
+                  }) 
+              });
+        }
+
+        function openDatepicker(){
+            
+            let val = $("#datefilter").val();
+            if(val == "custom"){
+            $('#exampleModal').modal('show')
+            }
+        }
+
+        function formatDate(date){
+                var dtToday = new Date(date);
+
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+
+                let newdate = day+ '-' + month + '-' + year ;   
+                //  console.log("time------", postTime," ",month," ",day, " ",year," ",dtToday," ",maxDate); 
+                return newdate;
+            };                        
+
+        function saveDate(){
+             $('#exampleModal').modal('toggle');
+            let startdate = $("#selctedStartDate").val();
+            let enddate = $("#selctedEndDate").val();
+             let dateval = startdate+","+enddate;
+
+             startdate = formatDate(startdate);
+             enddate = formatDate(enddate);
+             let datehtml = startdate+" TO "+enddate;
+
+             console.log("date",startdate, enddate);
+             $("#datefilter").append($('<option></option>').val(dateval).html(datehtml)).attr("selected", "selected");
+             $(`#datefilter option[value= '${dateval}']`).attr("selected", "selected");
+             
+
+            console.log("set date",$("#datefilter").val())
+        }
+
+        // $('#myform').submit(function(e) {
+               
+        //        let city = $("#cityfilter").val(),date = $("#datefilter").val(),SP = $("#SPid").val()
+               
+        //        if (city == "null" && (date == '<%= selecteddate %>' || '<%= selecteddate %>' =='') &&  SP == "null") {
+        //           $('#exampleModal5').modal('show')
+        //            return false;
+        //            }
+        //         return true;
+        //        });  
+  
+            function clearFilter(){
+                window.location.href = `<%=baseurl%>/dashboard`;
+            }
+
+            function getData(cityid){
+                fetch(`<%=baseurl%>/leads/getSP?projectid=0&cityid=${cityid}`)
+                .then(async (response)=>{
+                    let data = await response.json();
+                    var selectOption = $('#SPid');
+                    selectOption.empty();
+                    selectOption.append($('<option></option>').val("null").html("All Salespersons"))
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.seller_id).html(value.name)
+                    );
+                });
+
+                // console.log("hii", '<%= selectedCity == null ? "nulll": selectedCity%>')
+                // $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                
+                }); 
+            }
+
+
+        function getGraph(firstload=0){
+
+            if ( document.querySelector("#lineChart").hasChildNodes() ) {
+                document.querySelector("#lineChart").innerHTML = '';
+             }
+
+            var options = {
+                chart: {
+                    type: 'line',
+                    width: '100%',
+                    zoom: {
+                        enabled: true,
+                        type: "x",
+                        resetIcon: {
+                        offsetX: -10,
+                        offsetY: 0,
+                        fillColor: "#fff",
+                        strokeColor: "#37474F",
+                        },
+                        selection: {
+                        background: "#90CAF9",
+                        border: "#0D47A1",
+                        },
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                curve: 'smooth',
+                },
+                series: [],
+
+                noData: {
+                    text: 'No Data Available'
+                }
+            }
+
+            var chart = new ApexCharts(
+            document.querySelector("#lineChart"),
+            options
+            );
+
+            chart.render();
+
+            // console.log("eee",document.querySelector("#lineChart"))
+
+            let cityid = $("#cityfilter").val();
+            let SPid = $("#SPid").val();
+            let url = "";
+            let month,year;
+
+            if(firstload==1){
+
+                let Todaydate = new Date()
+                month = Todaydate.getMonth()+1;
+                year = Todaydate.getFullYear();
+            }
+            else{
+                year = $("#yearDropDown").val();
+                month = $("#monthDropDown").val();
+            }
+           
+            console.log(year,month,cityid,SPid);
+
+            url = `<%= baseurl %>/dashboard/getGraph?month=${month}&year=${year}&cityid=${cityid}&SPid=${SPid}`
+
+            $.getJSON(url, function(response) {
+                if(response.length > 0){
+                console.log("response", response)
+
+                    chart.updateSeries([{
+                        name: 'Enquiries',
+                        data: response
+                    }])
+                }
+
+            });
+
+        }
+
+                
+            $(document).ready(function() { 
+            
+            var years = document.getElementById("yearDropDown");
+            let date = new Date();
+            var currentYear = date.getFullYear();
+            var currentMonth = date.getMonth()+1;
+
+            //Loop and add the Year values to DropDownList.
+            for (var i = currentYear; i >= currentYear-5; i--) {
+                
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                years.appendChild(option);
+            };
+
+            $(`#monthDropDown option[value= ${currentMonth} ]`).attr("selected", "selected");            
+            
+            })
+            
+    
+        var options = {
+          series: [ parseInt('<%= totalFollowUp[0].count %>'),parseInt('<%= totalRegistrationDone[0].count %>'),parseInt('<%= totalClaimDisbursed[0].count %>'),parseInt('<%= totalSiteVisits[0].count %>'), parseInt('<%= totalOnlinePresnt[0].count %>' ), parseInt('<%= totalbooked[0].count %>') ,parseInt('<%= totaltoken[0].count %>') , parseInt('<%= totaldead[0].count %>',parseInt('<%= totalFreshLead[0].count %>'))],
+          labels: ['Follow Up','Registration Done','Claim Disbursed','Site Visits', 'Online Presentation', 'Booked', 'Token', 'Dead', 'Fresh Lead'],
+          chart: {
+          type: 'donut',
+        },
+        fill: { colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800', '#fcba03', '#03fc62', '#0095ff','#4800ff'] },
+        colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800','#fcba03','#03fc62', '#0095ff', '#4800ff'],
+        plotOptions: {
+            pie: {
+                donut: {
+                    labels: {
+                        show: true,
+                        total: {
+                        show: true,
+                        label: 'Total',
+                        color: '#373d3f',
+                        formatter: function (w) {
+                            return w.globals.seriesTotals.reduce((a, b) => {
+                                return a + b
+                            }, 0)
+                            }
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        position: 'bottom'
+                    },
+                    
+                }
+            }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#donutchart"), options);
+        chart.render();
+        </script>
+
+    </body>
+
+<!-- Mirrored from themesbrand.com/skote-django/layouts/dashboard-saas.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Dec 2021 14:35:58 GMT -->
+</html>

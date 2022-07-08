@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+
+
+    
+<head>
+        
+        <meta charset="utf-8" />
+        <title>City Head | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        
+        <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="assets/libs/%40chenfengyuan/datepicker/datepicker.min.css">
+        <link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    
+        <style>
+            div.dataTables_wrapper div.dataTables_filter label input
+            {
+                display: inline-block;
+                width: auto;
+            }
+
+            div.dataTables_wrapper div.dataTables_length label select
+            {
+              display: inline-block;
+              width: auto;   
+            }
+
+            div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+                margin: 2px 0;
+                white-space: nowrap;
+                justify-content: flex-end;
+            }
+
+            table {
+                table-layout:fixed;
+            }
+            td{
+                overflow:hidden;
+                text-overflow: ellipsis;
+            }
+
+        </style>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        
+        <div id="layout-wrapper-zero">Welcome City Head </div>
+
+        <div id="layout-wrapper">
+
+            
+            <%- include('templates/admin-navbar'); %> 
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%- include('templates/left-sidebar'); %> 
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+
+
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                    
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <!-- allert -->
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: <%=(success.length>0)?'block':'none' %>">
+                                            <%=success%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: <%=(failed.length>0)?'block':'none' %>">
+                                            <%=failed%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <h5 class="card-title mb-4">Register City Head Representatives</h5>
+
+                                        <!-- form -->
+                                        <form class="row gy-2 gx-3 align-items-center" id="myform" action="/cityHeads/addCityHead", method="post">
+                                            <div class="col">
+                                                <!-- <label class="visually-hidden" for="autoSizingInput">Name</label> -->
+                                                <input type="text" class="form-control" id="add_name" name="add_name" placeholder="Enter Name">
+                                            </div>
+                                            <div class="col">
+                                                <!-- <label class="visually-hidden" for="autoSizingInputGroup">Username</label> -->
+                                                <!-- <div class="input-group"> -->
+                                                    <!-- <div class="input-group-text">@</div> -->
+                                                    <input type="text" class="form-control" id="add_email" name="add_email" placeholder="Enter Email">
+                                                <!-- </div> -->
+                                            </div>
+                                            <div class="col">
+                                                <!-- <label class="visually-hidden" for="autoSizingInputGroup">Username</label> -->
+                                                <!-- <div class="input-group"> -->
+                                                    <!-- <div class="input-group-text">@</div> -->
+                                                    <input type="number" class="form-control" id="add_moble" name="add_mobile"  placeholder="Enter Mobile" >
+                                                <!-- </div> -->
+                                            </div>
+                                            <div class="col">
+                                                <!-- <label class="visually-hidden" for="autoSizingSelect">City</label> -->
+                                                <select class="form-select" name="cityid" id="add_city">
+                                                    <option selected value="0">Choose city</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" id="Add_button" class="btn btn-primary w-md">Add</button>
+                                            </div>
+                                            
+                                            
+                    
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- start page title -->
+                        <!-- end page title -->
+
+                        <!-- Upload FIles and Vide Sections -->                        
+                        <div class="row">
+                            
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">City Heads Representatives</h4>
+                                        <table id="cityheadtable" width="100%" class="table table-bordered  nowrap w-100">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>City</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            
+                                            <% cityHeads.forEach(function(cityHead){ %>
+                                            <tr>
+                                                <td><%= cityHead.name %> </td>
+                                                <td><%= cityHead.email %></td>
+                                                <td><%= cityHead.mobile %></td>
+                                                <td><%= cityHead.city %></td>
+                                                <% if (cityHead.status===1) { %>
+                                                    <td><span class="badge bg-success text-dark">Activated </span></td>
+                                                <% } else if (cityHead.status===2) { %>
+                                                    <td><span class="badge bg-warning">Pending</span></td>
+                                                 <% } else { %>
+                                                    <td><span class="badge bg-danger">Deactivated</span></td>
+                                                  <% } %>
+                            
+                                                <td class="d-flex" style=" justify-content: space-between"  >
+                                                    <a class="btn btn-outline-secondary btn-sm edit"  title="Edit" onclick="fetchData('<%=cityHead.id%>')">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+
+                                                    <div class="dropdown ml-2">
+                                                        <a class="dropdown-toggle btn btn-outline-secondary btn-sm edit mr-2 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bi bi-three-dots-vertical"></i>
+                                                        </a>   
+                                                        <select class="dropdown-menu bg-info text-dark" aria-labelledby="dropdownMenuButton1" onchange="changeStatus('<%=cityHead.id%>', this.value)">
+                                                          <option selected>Select status</option>
+                                                          <option value="1">Activate</option>
+                                                          <option value="2">Pending</option>
+                                                          <option value="3">Deactivate</option>>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                            </tbody>
+                                        </table>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+
+                        </div> <!-- end row -->
+                        
+                       
+                    </div>
+                </div>
+                <!-- End Page-content -->
+
+                
+                <%- include('templates/footer'); %> 
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- Add Builder Modal -->
+        <%- include('templates/builderModal'); %> 
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit City Head details</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="<%= baseurl %>/cityHeads/update" , method="post" id="updateForm">
+                    <div class="mb-3">
+                        
+                        <input type="hidden" class="form-control" name="id" id="id" >
+                      </div>
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" name="name" id="name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="email" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" name="email" id="email" readonly>
+                      </div>
+                      <div class="mb-3">
+                        <label for="mobile" class="col-form-label">Mobile:</label>
+                        <input type="text" class="form-control" name="mobile" id="mobile">
+                      </div>
+                        <div class="col-sm-auto">
+                            <label for="city" class="col-form-label">City:</label>
+                            <select class="form-select" name="city" id="cityid">
+                                <option selected value="0">Choose city</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" >Submit</button>
+                          </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- JAVASCRIPT -->
+        <script src="/assets/libs/jquery/jquery.min.js"></script>
+        <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="/assets/libs/node-waves/waves.min.js"></script>
+        <!-- Required datatable js -->
+        <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+        <script src="/assets/libs/select2/js/select2.min.js"></script>
+        <script src="/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+        <script src="/assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+        <script src="/assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+
+        <!-- Responsive examples -->
+        <script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+
+
+        <!-- Datatable init js -->
+        <script src="/assets/js/pages/datatables.init.js"></script>  
+
+
+        
+        <!-- <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script> -->
+
+      
+        <script src="/assets/js/app.js"></script>
+        <script>
+
+            $(document).ready(function() {
+                $('#cityheadtable').dataTable( {
+                    paging: true,
+                    bSort: false,
+                    searching: true,
+                    autoWidth: true,
+                    columns: [
+                    { "width": "13%" },
+                    { "width": "18%" },
+                    { "width": "10%" },
+                    { "width": "10%" },
+                    { "width": "8%" },
+                    { "width": "7%" }
+                    ]
+                });
+            })
+
+            $(document).ready(function() {
+            $("#myform").validate({
+                // Specify validation rules
+                rules: {
+                add_name: {
+                required: true,
+                maxlength: 500,
+                lettersonly: true
+                },
+                add_email: {
+                    required: true,
+                    email: true
+                },
+                add_city: {
+                    required: true,
+                    minlength: 1
+                },
+                add_mobile: {
+                    minlength: 10,
+                    maxlength: 10
+                }
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+        })
+
+
+        $( document ).ready(function() {
+                
+                    
+                fetch(`<%=baseurl%>/cityHeadDetails/allcity`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                // console.log(data);
+                var selectOption = $('#add_city');
+                var selectOption2  = $('#cityid')
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+
+                    selectOption2.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                   
+                });
+
+                })
+            });
+
+
+        </script>
+
+
+        <script>
+            $(document).ready(function() {
+            $("#updateForm").validate({
+                // Specify validation rules
+                rules: {
+                add_name: {
+                required: true,
+                maxlength: 500,
+                lettersonly: true
+                },
+                add_email: {
+                    required: true,
+                    email: true
+                },
+                add_city: {
+                    required: true,
+                    minlength: 1
+                },
+                add_mobile: {
+                    minlength: 10,
+                    maxlength: 10
+                }
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+        })
+
+        </script>
+
+        <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+        <!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
+
+        <!-- form advanced init -->
+        <!-- <script src="assets/js/pages/form-advanced.init.js"></script> -->
+        <!-- jquery step -->
+        <script src="assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+        
+
+
+        
+        <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+        <!-- form wizard init -->
+        <!-- <script src="assets/js/pages/form-wizard.init.js"></script> -->
+
+        
+
+        <!--tinymce js-->
+        <script src="assets/libs/tinymce/tinymce.min.js"></script>
+
+        <!-- init js -->
+        <script src="assets/js/pages/form-editor.init.js"></script>
+        <!-- form repeater js -->
+        <script src="assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+        <script src="assets/js/pages/form-repeater.int.js"></script>
+ 
+        <script>
+
+            let USERTYPE = "<%=USERTYPE%>";
+            function fetchData(id){
+                // data-bs-toggle="modal" data-bs-target="#exampleModal"
+                $('#exampleModal').modal('show')
+
+               
+                fetch(`<%= baseurl%>/cityHeads/get_cityHead_by_id?id=${id}`)
+                 .then( async (response) =>{ 
+                     
+                    let data = await response.json()
+                    console.log(data[0]);
+                    document.getElementById("id").value = id;
+                    document.getElementById("name").value = data[0].name;
+                    document.getElementById("email").value = data[0].email;
+                    document.getElementById("mobile").value = data[0].mobile;
+                    document.getElementById("city").value = data[0].city;
+                    
+
+                })
+            }
+
+            if(USERTYPE == 1){
+                document.getElementById("layout-wrapper-zero").style.display = "none";
+            }
+            else if(USERTYPE != 1){
+                document.getElementById("layout-wrapper").style.display = "none";
+            }
+
+
+            function changeStatus(cityHeadId, newStatus){
+                window.location.href = `<%= baseurl %>/cityHeads/changeStatus?id=${cityHeadId}&newstatus=${newStatus}`
+            }
+
+            // function modalSubmit(e){
+                 
+            //     let data = {
+            //         "id": document.getElementById("id").value,
+            //         "name": document.getElementById("name").value,
+            //         "email": document.getElementById("email").value,
+            //         "mobile": document.getElementById("mobile").value,
+            //         "city": document.getElementById("city").value,
+                    
+            //     }
+            //     fetch(`${baseURL}/cityHeads/update`, {
+            //         method: "POST",
+            //         headers: {
+            //         "Content-Type": "application/json",
+            //         },
+            //         body: JSON.stringify(data)
+            //     }).then(data=>{
+            //         $('#exampleModal').modal('hide')
+
+            //         window.location.reload();
+            //     })
+            // }
+
+            //  function  update_status(id, status){
+
+            //     console.log(status)
+            //      fetch(`${baseURL}/cityHeads/changeStatus`,{
+            //         method: "post",
+            //         headers: {
+            //         "Content-Type": "application/json",
+            //         },
+                    
+            //         body: JSON.stringify({"id":id, "status": status})
+            //     })
+            //     .then(data=>{
+            //              window.location.reload();
+            //      })
+            // }
+            
+        </script>
+
+        <script src="assets/js/app.js"></script>
+        
+    </body>
+
+</html>

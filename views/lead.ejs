@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+
+    
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Leads | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/assets/images/favicon.ico">
+        
+        
+        <link href="/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+        <link rel="../stylesheet" href="/assets/libs/%40chenfengyuan/datepicker/datepicker.min.css">
+        <link href="/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <!-- DataTables -->
+        <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+        <!-- Bootstrap Css -->
+        <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+        <!-- Icons Css -->
+        <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+            div.dataTables_wrapper div.dataTables_filter label 
+            {
+                font-weight: normal;
+                white-space: nowrap;
+                text-align: right;
+            }
+
+            table {
+                table-layout:fixed;
+            }
+            td{
+                overflow:hidden;
+                text-overflow: ellipsis;
+            }
+
+
+        </style>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <%- include('templates/admin-navbar'); %> 
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%- include('templates/left-sidebar'); %> 
+            <!-- Left Sidebar End -->            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <!-- <h4 class="mb-sm-0 font-size-18">Leads Table</h4> -->
+
+                                <form class="row gy-2 gx-3 align-items-center" id="myform" action="/leads"  method="get">
+                                    <input type="number" hidden class="form-control" value="1" name="filter">
+                                    <div class="col">
+                                        <select class="form-select w-auto "  aria-label="Default select example" name="cityid" id="cityfilter" onchange="getData(this.value)">
+                                            <option  value="null">All Cities</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select w-auto "   aria-label="Default select example" name="localityid" id="localityfilter">
+                                            <option  value="null">All Localities</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select w-auto "   aria-label="Default select example" name="SPid" id="SPid">
+                                            <option  value="null">All Salespersons</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select w-auto "   aria-label="Default select example" name="source" id="sourcefilter">
+                                            <option  value='' selected>All Source</option>
+                                            <option  value="Ola">Ola</option>
+                                            <option  value="Zoom">Zoom</option>
+                                            <option  value="Google Meet">G. meet</option>
+                                            <option  value="Microsoft Teams">M. Teams</option>
+                                            <option  value="Brochure">Brochure</option>
+                                            <option  value="Plan Kit">Plan Kit</option>
+                                            <option  value="Price Sheet">Price Sheet</option>
+                                            <option  value="Payment Schedule">Payment Schedule</option>
+                                            <option  value="notRequired">Not Required</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select w-auto "   aria-label="Default select example" name="status" id="statusfilter">
+                                            <option  value="null">All Status</option>
+                                            <option  value="8">Fresh Leads</option>
+                                            <option  value="0">Follow Up</option>
+                                            <option  value="1">Presentation Done</option>
+                                            <option  value="2">Site Visit Done</option>
+                                            <option  value="3">Token Done</option>
+                                            <option  value="4">Booking Done</option>
+                                            <option  value="5">Registration Done </option>
+                                            <option  value="6">Claim Disbursed</option>
+                                            <option  value="7">Dead</option>
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" id="Add_button"   class="btn btn-success w-md">Filter</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button"  onclick="clearFilter()" class="btn btn-warning w-md">Reset</button>
+                                    </div>
+    
+                                    </div>
+                                </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                        <!-- end page title -->
+
+                        <!-- Upload FIles and Vide Sections -->                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <!-- allert -->
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: <%=(success.length>0)?'block':'none' %>">
+                                            <%=success%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: <%=(failed.length>0)?'block':'none' %>">
+                                            <%=failed%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+
+                                        <h4 class="mb-sm-0 font-size-18">Leads Table</h4>
+
+                                        <!-- table -->
+                                        <table id="leadsTable"  width="100%" class="table table-bordered  nowrap w-100">
+                                            <thead>
+                                            <tr>
+
+                                                <th>Date</th>
+                                                <th>Project Name</th>
+                                                <th>City</th>
+                                                <th>Locality</th>
+                                                <th>Lead Name</th>
+                                                <th>Source</th>
+                                                <th>Sales Persons</th>
+                                                <th>Status</th>
+                                                <th>Remarks</th>
+                                                <th>Scheduled Date</th>
+                                            </tr>
+                                            </thead>
+        
+                                            <tbody>
+
+                                                <% leads.forEach(function(lead){ %>
+                                                    <tr>
+                                                        <td><%= moment(lead.date).format('DD/MM/YYYY') %></td>
+                                                        <td data-bs-toggle="tooltip" title='<%= lead.project_name %>'><%= lead.project_name %> </td>
+                                                        <td><%= lead.city %> </td>
+                                                        <td><%= lead.locality %> </td>
+                                                        <td><a href="javascript:fetchUser(<%= lead.userid %> )" class="link-primary"><%= lead.username %></a></td>
+                                                        <td><%= lead.source %></td>
+                                                        <td><a href= "javascript:viewDetails( '<%= lead.projectId %>' )" class="link-primary">View Details</a></td>
+                                                        <td>
+                                                            <select class="form-select " onchange="changeStatus(this.value,'<%= lead.enqid %>','<%= lead.project_name %>','<%= lead.userid %>' )"  aria-label="Default select example" name="status" id="statusselect">
+
+                                                                <option value="8" <%= lead.status == '8' ? 'selected': " " %> >Fresh Lead</option>
+                                                                <option value="0" <%= lead.status == '0' ? 'selected': " " %> >Follow Up</option>
+                                                                <option value="1" <%= lead.status == '1' ? 'selected': " " %> >Online Presentation Done</option>
+                                                                <option value="2" <%= lead.status == '2' ? 'selected': " " %> >Site Visit Done</option>
+                                                                <option value="3" <%= lead.status == '3' ? 'selected': " " %> >Token Done</option>
+                                                                <option value="4" <%= lead.status == '4' ? 'selected': " " %> >Booking Done</option>
+                                                                <option value="5" <%= lead.status == '5' ? 'selected': " " %> >Registration Done </option>
+                                                                <option value="6" <%= lead.status == '6' ? 'selected': " " %> >Claim Disbursed</option>
+                                                                <option value="7" <%= lead.status == '7' ? 'selected': " " %> >Dead</option>
+                                                            </select>
+                                                        </td>
+
+                                                        <% if (lead.remarks != null) { %>
+                                                            <td data-bs-toggle="tooltip" title='<%= lead.remarks %>'><a href="javascript:fetchRemarks(<%= lead.enqid %> )"><%= lead.remarks %></a></td>
+                                                        <% } else { %>
+                                                            <td>No remarks </td>
+                                                        <% } %>
+                                                        
+                                                        <% let scheduledDate = moment(lead.remarkDate).format('DD/MM/YYYY hh:mm A')  %>
+                                                        
+                                                          <td data-bs-toggle="tooltip" title='<%= scheduledDate%>'><%= scheduledDate %> </td>
+                                                        
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        
+                    </div> <!-- container-fluid -->
+
+                </div>
+
+                <!-- End Page-content -->
+                
+                <%- include('templates/footer'); %> 
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- Add Builder Modal -->
+        <%- include('templates/builderModal'); %> 
+        
+    </div>
+
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <label for="name">Name: </label>
+                  <h5 id="namemodal"></h5>
+                  <label for="mobile">Mobile: </label>
+                  <h5 id="mobilemodal"></h5>
+                  <label for="email">Email: </label>
+                  <h5 id="emailmodal"></h5>
+                </div>
+                </div>
+                </div>
+                </div>
+
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel2" ></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="<%=baseurl%>/leads/updateStatus" , enctype="multipart/form-data", method="post" >
+                            
+                                <div class="mb-3">       
+                                    <input type="text" hidden class="form-control" name="enqid" id="enqdmodal"></input>
+                                 </div>
+
+                                 <div class="mb-3">       
+                                    <input type="text" hidden class="form-control" name="status" id="statusmodal"></input>
+                                  </div>
+                                  <div class="mb-3">       
+                                    <input type="text" hidden class="form-control" name="userid" id="usermodal"></input>
+                                  </div>
+                                  <div class="mb-3">       
+                                    <input type="text" hidden class="form-control" name="projectname" id="projectname"></input>
+                                  </div>
+                                
+                                  <div class="form-group" >
+                                    <label for="remarks">Remarks for updated status: </label>
+                                    <textarea class="form-control" required id="reamrksmodal" name="remarks" rows="3"></textarea>
+                                    
+                                    <label for="myfile">Select files:</label>
+                                    <input type="file" id="myfile" multiple name="myfile">
+                                    
+                                    <br><br>
+                                    <label for="changeTime">Select Date & Time: </label>
+                                    <input type="datetime-local" required id="changeTime" name="changeTime">
+
+                                  </div>
+                                  
+                                    <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" >Update Status</button>
+                                    </div>
+                              </form>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+
+                        <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Remarks </h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                        <div class="modal-body">
+                            
+                            
+                                <table class="table" id="remarksTable">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Remarks</th>
+                                        <th scope="col">Changed By</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Download</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody id="getremarks">
+                                    </tbody>
+                                  </table>
+        
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="suspendclose">Close</button>
+                                    </div>
+                            
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+
+                          <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel4"></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                        <div class="modal-body">
+                            
+                            
+                                <table class="table" id="detailsTable">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Mobile</th>
+                                        <th scope="col">Email</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody id="getSPDetails">
+                                    </tbody>
+                                  </table>
+        
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="suspendclose">Close</button>
+                                    </div>
+                            
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+
+                          <div class="modal" id="exampleModal5" tabindex="-1">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h6 class="modal-title">Please Choose Filters</h6>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                  You need to choose atleast one filter to conduct a filter search
+                                </p>
+                                
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+
+
+        <!-- JAVASCRIPT -->
+        <script src="/assets/libs/jquery/jquery.min.js"></script>
+        <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="/assets/libs/node-waves/waves.min.js"></script>
+        <!-- Required datatable js -->
+        <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+        <script src="/assets/libs/select2/js/select2.min.js"></script>
+        <script src="/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+        <script src="/assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+        <script src="/assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+
+        <!-- Responsive examples -->
+        <script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+
+
+        <!-- Datatable init js -->
+        <script src="/assets/js/pages/datatables.init.js"></script>  
+
+
+        <script src="/assets/js/app.js"></script>
+
+
+        <script>
+            $(document).ready(function() {
+                $('#leadsTable').dataTable( {
+                    paging: true,
+                    bSort: false,
+                    searching: true,
+                    scrollX: true,
+                    autoWidth: true,
+                    columns: [
+                        { "width": "11%" },
+                        { "width": "11%" },
+                        { "width": "8%" },
+                        { "width": "9%" },
+                        { "width": "10%" },
+                        { "width": "5%" },
+                        { "width": "11%" },
+                        { "width": "12%" },
+                        { "width": "9%" },
+                        { "width": "14%" },
+                    ]
+                });
+            })
+
+            $(document).ready(function(){
+                $('[data-bs-toggle="tooltip"]').tooltip();   
+            });
+
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js" integrity="sha512-x/vqovXY/Q4b+rNjgiheBsA/vbWA3IVvsS8lkQSX1gQ4ggSJx38oI2vREZXpTzhAv6tNUaX81E7QBBzkpDQayA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+        <script>
+
+            $('#myform').submit(function(e) {
+               
+             let city = $("#cityfilter").val(), locality = $("#localityfilter").val(), source = $("#sourcefilter").val(),status = $("#statusfilter").val(),SP = $("#SPid").val()
+            //  console.log("city :"+city,"locality:"+locality,"source:"+source,"status:"+status,"sp:"+SP)
+             
+             if (city == "null" && locality== "null" && source == '' && status == "null" && SP == "null") {
+                $('#exampleModal5').modal('show')
+                 return false;
+                 }
+              return true;
+             });    
+
+            let USERTYPE = "<%=USERTYPE%>";
+            if(USERTYPE == 2){
+                document.getElementById("cityfilter").style.display = "none";
+
+                $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/leads/localities?cityid=<%= usersCity %>`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                // console.log(data);
+                var selectOption = $('#localityfilter');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                });
+
+                $("#localityfilter option[value= '<%= selectedLocality == null?'null' : selectedLocality %>']").attr("selected", "selected");
+                })
+               
+                $("#statusfilter option[value= '<%= selectedStatus == undefined?'null': selectedStatus %>']").attr("selected", "selected");
+                $("#sourcefilter option[value= '<%= selectedSource == undefined?'null': selectedSource %>']").attr("selected", "selected");
+            
+                $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/leads/getSP?projectid=0`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                //  console.log(data);
+                var selectOption = $('#SPid');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.seller_id).html(value.name)
+                    );
+                });
+               
+                // console.log("ssssssss",'<%= selectedSP%>')
+                $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                
+                }) 
+                });
+            
+            });
+
+            }
+            else if(USERTYPE == 3){
+                document.getElementById("cityfilter").style.display = "none";
+                document.getElementById("SPid").style.display = "none";
+
+
+                $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/leads/localities?cityid=<%= usersCity %>`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                // console.log(data);
+                var selectOption = $('#localityfilter');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                })
+                $("#localityfilter option[value= '<%= selectedLocality == null?'null' : selectedLocality %>']").attr("selected", "selected");
+                })
+                
+                $("#statusfilter option[value= '<%= selectedStatus == undefined?'null': selectedStatus %>']").attr("selected", "selected");
+                $("#sourcefilter option[value= '<%= selectedSource == undefined?'null': selectedSource %>']").attr("selected", "selected");
+            });
+            }
+
+
+        else if(USERTYPE == 1){
+            $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/cityHeadDetails/allcity`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                //  console.log(data);
+                var selectOption = $('#cityfilter');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                });
+                $("#cityfilter option[value= '<%= selectedCity == undefined?'null': selectedCity %>']").attr("selected", "selected");
+                $("#statusfilter option[value= '<%= selectedStatus == undefined?'null': selectedStatus %>']").attr("selected", "selected");
+                $("#sourcefilter option[value= '<%= selectedSource == undefined?'null': selectedSource %>']").attr("selected", "selected");
+                })
+            });
+
+            $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/leads/localities?cityid=0`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                // console.log(data);
+                var selectOption = $('#localityfilter');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                });
+
+                $("#localityfilter option[value= '<%= selectedLocality == null?'null' : selectedLocality %>']").attr("selected", "selected");
+
+                })
+            });
+
+            $( document ).ready(function() {   
+                fetch(`<%=baseurl%>/leads/getSP?projectid=0`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                //  console.log(data);
+                var selectOption = $('#SPid');
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.seller_id).html(value.name)
+                    );
+                });
+               
+                // console.log("ssssssss",'<%= selectedSP%>')
+                $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                
+                }) 
+            });
+        }
+
+        
+
+
+        </script>
+
+
+        <script>
+           
+
+           function maxDate(){
+                var dtToday = new Date();
+
+                let hrs = dtToday.getHours()
+                let mins = dtToday.getMinutes()
+                if(hrs<=9)
+                hrs = '0' + hrs
+                if(mins<10)
+                mins = '0' + mins
+                const postTime= hrs + ':' + mins;
+
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                var time = dtToday.getTime();
+
+                
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+
+                var maxDate = year + '-' + month + '-' + day + 'T' +postTime ;   
+                //  console.log("time------", postTime," ",month," ",day, " ",year," ",dtToday," ",maxDate); 
+                $('#changeTime').attr('max', maxDate);
+            };                           
+        
+            function viewDetails(projectid){
+                    
+                fetch(`<%=baseurl%>/leads/getSP?projectid=${projectid}`)
+                .then(async (response)=>{
+
+                    let data = await response.json();
+                
+                    console.log(projectid,data);
+                    for(let i=0;i<data.length;i++){
+                    $("#getSPDetails").append(`<tr ><td>${data[i].name}</td><td>${data[i].mobile}</td><td>${data[i].email}</td></tr>`)
+                    }
+                   document.getElementById("exampleModalLabel4").innerHTML = "Sales Person Details"
+                  $('#exampleModal4').modal('show')
+                });
+                
+            }
+            
+
+            function clearFilter(){
+                window.location.href = `<%=baseurl%>/leads`;
+            }
+
+            function getData(cityid){
+                fetch(`<%=baseurl%>/leads/localities?cityid=${cityid}`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                 console.log(data);
+
+                var selectOption = $('#localityfilter');
+                selectOption.empty();
+                selectOption.append($('<option></option>').val("null").html("All Localities"))
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                });
+                })
+
+                fetch(`<%=baseurl%>/leads/getSP?projectid=0&cityid=${cityid}`)
+                .then(async (response)=>{
+                    let data = await response.json();
+                    var selectOption = $('#SPid');
+                    selectOption.empty();
+                    selectOption.append($('<option></option>').val("null").html("All Salespersons"))
+                
+                $.each(data, function (index, value) {
+                
+                    selectOption.append(
+                        $('<option></option>').val(value.seller_id).html(value.name)
+                    );
+                });
+
+                // console.log("hii", '<%= selectedCity == null ? "nulll": selectedCity%>')
+                // $(`#SPid option[value= '<%= selectedSP == undefined?"null": selectedSP %>']`).attr("selected", "selected");
+                
+                }); 
+            }
+
+             
+            
+            
+            function fetchUser(userid){
+                fetch(`<%=baseurl%>/leads/getuser?userid=${userid}`)
+                .then(async (response)=>{
+                    let data = await response.json();
+
+                    console.log(data[0]);
+                    document.getElementById("namemodal").innerHTML = data[0].name;
+                    document.getElementById("mobilemodal").innerHTML = data[0].mobile;
+                    document.getElementById("emailmodal").innerHTML = data[0].email;
+                    document.getElementById("exampleModalLabel").innerHTML = "Lead Details"
+
+                    $('#exampleModal').modal('show')
+                    
+                })
+             }
+
+
+            //  function fetchSP(SPid){
+            //     fetch(`<%=baseurl%>/leads/getSP?sellerid=${SPid}`)
+            //     .then(async (response)=>{
+            //         let data = await response.json();
+
+            //         console.log("fetchsp",data[0])
+            //         // document.getElementById("namemodal").innerHTML = data[0].name;
+            //         // document.getElementById("mobilemodal").innerHTML = data[0].mobile;
+            //         // document.getElementById("emailmodal").innerHTML = data[0].email;
+            //         // document.getElementById("exampleModalLabel").innerHTML = "Sales Person Details"
+
+            //         // $('#exampleModal').modal('show')
+            //         return data[0];
+            //     })
+            //  }
+
+             function changeStatus(status,enqid,projectname,userid){
+               
+                document.getElementById('enqdmodal').value = enqid;
+                document.getElementById('statusmodal').value = status;      
+                document.getElementById('usermodal').value = userid;   
+                document.getElementById('projectname').value = projectname;    
+                document.getElementById('exampleModalLabel2').innerHTML = `${projectname} > Remarks`;
+
+                maxDate();
+                $('#exampleModal2').modal('show')
+             }
+
+
+             function formatDate(datetime) {
+                        var hours = datetime.getHours();
+                        var minutes = datetime.getMinutes();
+                        var ampm = hours >= 12 ? 'pm' : 'am';
+                        hours = hours % 12;
+                        hours = hours ? hours : 12; // the hour '0' should be '12'
+                        minutes = minutes < 10 ? '0'+minutes : minutes;
+                        var strTime = hours + ':' + minutes + ' ' + ampm;
+                        return   datetime.getDate() + "/" + (datetime.getMonth()+1) + "/"+ datetime.getFullYear() + "  " + strTime;
+                        }
+
+             function fetchRemarks(enqid){
+
+                fetch(`<%= baseurl %>/leads/remarks?id=${enqid}`)
+                .then(async(response)=>{
+                    let data = await response.json();  
+                    
+                    $.each(data, function (index, value) {
+                
+                        let status = ""
+                        
+                        switch(value.status) {
+                            case 0:
+                                status = "Follow Up "
+                                break;
+                            case 1:
+                                status = "Online Presentation Done"
+                                break;
+                            case 2:
+                                status = "Site Visit Done"
+                                break;
+                            case 3:
+                                status = "Token Done"
+                                break;
+                            case 4:
+                                status = "Booking Done"
+                                break;
+                            case 5:
+                                status = "Registration Done"
+                                break;
+                            case 6:
+                                status = "Claim Disbursed"
+                                break;
+                        }
+
+                        let datetime = new Date(value.date);
+                        datetime = formatDate(datetime)
+                        
+                        $("#getremarks").append(`<tr ><td style="display:none">${value.id}</td><td>${status}</td><td>${value.remarks}</td><td>${value.name}</td><td>${datetime}</td><td><button class="btn" onclick="docDownload(${value.id})"><i class="fa fa-download"></i>Download</button></td></tr>`)
+                    })
+                })
+
+                $('#exampleModal3').modal('show')
+             }
+
+             $('#exampleModal3').on('hidden.bs.modal', function () {
+                $('#getremarks').empty();
+            })
+
+            $('#exampleModal4').on('hidden.bs.modal', function () {
+                $('#getSPDetails').empty();
+            })
+
+            
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+           
+
+            function docDownload(remarkId){
+                 fetch(`<%= baseurl %>/leads/docs?id=${remarkId}`)
+                 .then(async (response)=>{
+                    let data = await response.json();
+                    alert(data.msg);
+                 })
+            }
+         
+        </script>
+      
+    </body>
+
+</html>

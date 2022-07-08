@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+
+
+    
+    <head>
+        
+        <meta charset="utf-8" />
+        <title>CityHead-Details | Housiey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/assets/images/favicon.ico">
+        
+        
+        <link href="/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+        <link rel="../stylesheet" href="/assets/libs/%40chenfengyuan/datepicker/datepicker.min.css">
+        <link href="/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <!-- DataTables -->
+        <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+        <!-- Bootstrap Css -->
+        <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+        <!-- Icons Css -->
+        <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+            div.dataTables_wrapper div.dataTables_filter label 
+            {
+                font-weight: normal;
+                white-space: nowrap;
+                text-align: right;
+            }
+
+            table {
+                table-layout:fixed;
+            }
+            td{
+                overflow:hidden;
+                text-overflow: ellipsis;
+            }
+
+
+        </style>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <%- include('templates/admin-navbar') %> 
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%- include('templates/left-sidebar') %> 
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">City Head Details</h4>
+
+                                    <select class="form-select w-25 " onchange="cityFilter(this.value)"  aria-label="Default select example" name="cityid" id="city">
+                                        <option selected value="0">All cities</option>
+                                    </select>
+
+                                    <button type="button" class="btn btn-secondary" onclick="suspended()">Suspended Users</button>
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                        <!-- end page title -->
+
+                        <!-- Upload FIles and Vide Sections -->                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        
+                                        <!-- allert -->
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: <%=(success.length>0)?'block':'none' %>">
+                                            <%=success%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: <%=(failed.length>0)?'block':'none' %>">
+                                            <%=failed%>
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+        
+                                        <!-- table -->
+                                        <table id="cityheadtable" class="table table-bordered dt-responsive  nowrap w-100">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Assigned Leads</th>
+                                                <th>City</th>
+                                                <th>Create Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+        
+                                            <tbody>
+
+                                                <% cityHeads.forEach(cityHead => { %>
+                                                     
+                                                    <tr>
+                                                        <td><%= cityHead.name %></td>
+                                                        <td><%= cityHead.AssignedLeads %></td>
+                                                        <td><%= cityHead.city_name %></td>
+                                                        <td><%= moment(cityHead.createdAt).format('DD/MM/YYYY') %></td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-light" onclick="getcityheadData('<%=cityHead.id%>')">Edit</button>
+                                                            <button type="button" class="btn btn-light" onclick="fetchData('<%=cityHead.name%>','<%=cityHead.id%>')">Suspend</button>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        
+                    </div> <!-- container-fluid -->
+
+                    <!-- second table -->
+
+                    <div class="page-content">
+                        <div class="container-fluid">
+                            <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0 font-size-18">Sales Person Details</h4>
+    
+                                        <button type="button" class="btn btn-secondary" onclick="SPsuspended()">Suspended Users</button>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+    
+                        
+                            <!-- end page title -->
+    
+                            <!-- Upload FIles and Vide Sections -->                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+            
+                                            <table id="salespersontable" class="table table-bordered dt-responsive  nowrap w-100">
+                                    
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Assigned Leads</th>
+                                                    <!-- <th>City</th> -->
+                                                    <th>Create Date</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+            
+                                                <tbody>
+    
+                                                    <% salesPersons.forEach(salesPerson => { %>
+                                                         
+                                                        <tr>
+                                                            <td><%= salesPerson.name %></td>
+                                                            <td><%= salesPerson.AssignedLeads %></td>
+                                                            <!-- <td><#%= salesPerson.city %></td> -->
+                                                            <td><%= moment(salesPerson.createdAt).format('DD/MM/YYYY') %></td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-light" onclick="getsalesPersonData('<%=salesPerson.id%>')">Edit</button>
+                                                                <button type="button" class="btn btn-light" onclick="fetchSPData('<%=salesPerson.name%>','<%=salesPerson.id%>')">Suspend</button>
+                                                            </td>
+                                                        </tr>
+                                                    <% }) %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row --> 
+                        </div> <!-- container-fluid -->
+
+
+                </div>
+
+                <!-- End Page-content -->
+                
+                <%- include('templates/footer') %> 
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+
+        <!-- Add Builder Modal -->
+        <%- include('templates/builderModal') %> 
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Suspend City Head</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="<%=baseurl%>/cityHeadDetails/CHsuspend" , method="post" id="updateForm">
+                    
+                    <div class="mb-3">
+                        <input type="text" hidden class="form-control" name="CHid" id="CHid2"></input>
+                      </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">city Head:</label>
+                        <input type="text" class="form-control" name="name" id="name"></input>
+                      </div>
+                      
+                        <div class="col-sm-auto">
+                            <label for="city" class="col-form-label">Subsitute :</label>
+                            <select class="form-select" name="CHRid" id="subsitute">
+                                <option value="" selected>Select subsitute</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" >Suspend & Update</button>
+                          </div>
+                  </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                
+
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit city Head details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                <div class="modal-body">
+                    <form action="<%=baseurl%>/cityHeadDetails/updateCH" , method="post" id="updateForm">
+                    
+                        <div class="mb-3">
+                            <input type="text" hidden class="form-control" name="id" id="cityHeadid">
+                          </div>
+                      <div class="mb-3">
+                          <label for="name" class="col-form-label">Name:</label>
+                          <input type="text" class="form-control" name="name" id="cityHeadname">
+                        </div>
+                        <div class="mb-3">
+                          <label for="email" class="col-form-label">Email:</label>
+                          <input type="text" class="form-control" name="email" id="cityHeademail">
+                        </div>
+                        <div class="mb-3">
+                          <label for="mobile" class="col-form-label">Mobile:</label>
+                          <input type="text" class="form-control" name="mobile" id="cityHeadmobile">
+                        </div>
+                          <div class="col-sm-auto">
+                              <label for="city" class="col-form-label">City:</label>
+                              <select class="form-select" name="city" id="cityHeadcity">
+                              </select>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary" >Submit</button>
+                            </div>
+                    </form>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  
+                  <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Suspended users</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                <div class="modal-body">
+                    <form >
+                    
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Replaced By</th>
+                                <th scope="col">Suspension date</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody id="suspendbody">
+                            </tbody>
+                          </table>
+
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="suspendclose">Close</button>
+                            </div>
+                    </form>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+
+
+                  <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit sales Person details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                <div class="modal-body">
+                    <form action="<%=baseurl%>/cityHeadDetails/updateSP" , method="post" id="updateForm">
+                    
+                        <div class="mb-3">
+                            <input type="text"  hidden class="form-control" name="SPid" id="SPid">
+                          </div>
+                       
+                      <div class="mb-3">
+                          <label for="name" class="col-form-label">Name:</label>
+                          <input type="text" class="form-control" name="name" id="SPname">
+                        </div>
+                        <div class="mb-3">
+                          <label for="email" class="col-form-label">Email:</label>
+                          <input type="text" class="form-control" name="email" id="SPemail" >
+                        </div>
+                        <div class="mb-3">
+                          <label for="mobile" class="col-form-label">Mobile:</label>
+                          <input type="text" class="form-control" name="mobile" id="SPmobile">
+                        </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary" >Submit</button>
+                            </div>
+                    </form>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+
+
+                  <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Suspend Sales Person</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="<%=baseurl%>/cityHeadDetails/SPsuspend" , method="post" >
+                            
+                            <div class="mb-3">       
+                                <input type="text" hidden class="form-control" name="SPid" id="SPid2"></input>
+                              </div>
+                            
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">Sales Person:</label>
+                                <input type="text" class="form-control" name="SPname" id="SPname2"></input>
+                              </div>
+                              
+                                <div class="col-sm-auto">
+                                    <label for="city" class="col-form-label">Subsitute :</label>
+                                    <select class="form-select" name="SPRid" id="subsituteSP">
+                                        <option value="" selected>Select subsitute</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" >Suspend & Update</button>
+                                  </div>
+                          </form>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+
+                        <div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Suspended users</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                        <div class="modal-body">
+                            <form >
+                            
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Replaced By</th>
+                                        <th scope="col">Suspension date</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody id="SPsuspendbody">
+                                    </tbody>
+                                  </table>
+        
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="suspendclose">Close</button>
+                                    </div>
+                            </form>
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+        
+
+
+        <!-- JAVASCRIPT -->
+        <script src="/assets/libs/jquery/jquery.min.js"></script>
+        <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="/assets/libs/node-waves/waves.min.js"></script>
+        <!-- Required datatable js -->
+        <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+        <script src="/assets/libs/select2/js/select2.min.js"></script>
+        <script src="/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+        <script src="/assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+        <script src="/assets/libs/%40chenfengyuan/datepicker/datepicker.min.js"></script>
+
+
+        <!-- Responsive examples -->
+        <script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+
+
+        <!-- Datatable init js -->
+        <script src="/assets/js/pages/datatables.init.js"></script>  
+
+
+        <script src="/assets/js/app.js"></script>
+  
+        <script>
+
+        $(document).ready( function () {$('#cityheadtable').dataTable( {
+            bSort: false,
+        });
+        })
+
+        $(document).ready( function () {$('#salespersontable').dataTable( {
+            bSort: false,
+        });
+        })
+
+        let selectedCity = '<%= selectedCity %>'
+            $( document ).ready(function() {
+                
+                    
+                    fetch(`<%=baseurl%>/cityHeadDetails/allcity`)
+                    .then(async (response)=>{
+                        let data = await response.json();
+
+                    // console.log(data);
+                    var selectOption = $('#city');
+                    var selectOption2 = $('#cityHeadcity');
+                    
+                    $.each(data, function (index, value) {
+                    
+                        selectOption.append(
+                            $('<option></option>').val(value.id).html(value.name)
+                        );
+
+                        selectOption2.append(
+                            $('<option></option>').val(value.id).html(value.name)
+                        )
+                        
+                        // console.log("hello",selectedCity  )
+                        if(value.id == selectedCity ){
+                            
+                            $("#city option[value= '<%= selectedCity %>']").attr("selected", "selected");
+                        }
+                    });
+
+                    })
+                });
+            
+
+                function getcityheadData(id){
+                // data-bs-toggle="modal" data-bs-target="#exampleModal"
+                $('#exampleModal2').modal('show')
+               
+
+                fetch(`<%=baseurl%>/cityHeadDetails/CHdata?id=${id}`)
+                 .then( async (response) =>{ 
+                     
+                    let data = await response.json()
+                    console.log(data[0]);
+                    
+                    document.getElementById("cityHeadid").value = id;
+                    document.getElementById("cityHeadname").value = data[0].name;
+                    document.getElementById("cityHeademail").value = data[0].email;
+                    document.getElementById("cityHeadmobile").value = data[0].mobile;
+                    document.getElementById("cityHeadcity").value = data[0].city;
+
+                })
+            }
+
+
+            function getsalesPersonData(id){
+                $('#exampleModal4').modal('show')
+               
+
+                fetch(`<%=baseurl%>/cityHeadDetails/SPdata?id=${id}`)
+                 .then( async (response) =>{ 
+                     
+                    let data = await response.json()
+                   
+                    document.getElementById("SPid").value = id;
+                    document.getElementById("SPname").value = data[0].name;
+                    document.getElementById("SPemail").value = data[0].email;
+                    document.getElementById("SPmobile").value = data[0].mobile;
+
+                })
+            }
+             
+             function cityFilter (cityid){
+                // console.log(cityid)
+                window.location.href = `<%=baseurl%>/cityHeadDetails/bycity?cityid=${cityid}`;                 
+            }
+
+             function fetchData(name,id){
+                $('#exampleModal').modal('show');
+
+                fetch(`<%=baseurl%>/cityHeadDetails/allcityheads`)
+                .then( async (response)=>{
+                   
+                let data = await response.json()
+                //  console.log(data);
+                var selectOption = $('#subsitute');
+                $.each(data, function (index, value) {
+                    
+                    if((value.id != id || value.name != name) && (value.city == selectedCity || selectedCity == "")){
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                    }
+                });
+                 document.getElementById("name").value = name;
+                 document.getElementById("CHid2").value = id;
+                })
+             }
+
+
+             function fetchSPData(name,id){
+                $('#exampleModal5').modal('show');
+
+                fetch(`<%=baseurl%>/cityHeadDetails/allsalesperson`)
+                .then( async (response)=>{
+                   
+                let data = await response.json()
+                //  console.log("SP",data,name,id);
+                var selectOption = $('#subsituteSP');
+
+                $.each(data, function (index, value) {
+                    
+                    if((value.id != id || value.name != name) && (value.city == selectedCity || selectedCity == "")){
+                    selectOption.append(
+                        $('<option></option>').val(value.id).html(value.name)
+                    );
+                    }
+                });
+                 document.getElementById("SPname2").value = name;
+                 document.getElementById("SPid2").value = id;
+                })
+             }
+            
+            function suspended(){
+                
+                $('#exampleModal3').modal('show');
+                fetch(`<%=baseurl%>/cityHeadDetails/allsuspended`)
+                .then(async (response)=>{
+                    let data = await response.json();
+                    //  console.log(data);
+                    $.each(data, function (index, value) {
+                        let date = value.date.split("T");
+                        date[0] = date[0].split("-").reverse().join("-")
+                        console.log(value.date)
+                        
+                        $("#suspendbody").append(`<tr><td>${value.name}</td><td>${value.email}</td><td>${value.replaced_by}</td><td>${date[0]}</td></tr>`)
+                    })
+                })
+            }
+
+
+            function SPsuspended(){
+                
+                $('#exampleModal6').modal('show');
+                fetch(`<%=baseurl%>/cityHeadDetails/allSPsuspended`)
+                .then(async (response)=>{
+                    let data = await response.json();
+                     console.log(data);
+                    $.each(data, function (index, value) {
+                        let date = value.date.split("T");
+                        date[0] = date[0].split("-").reverse().join("-")
+                        console.log(value.date)
+                        
+                        $("#SPsuspendbody").append(`<tr><td>${value.name}</td><td>${value.email}</td><td>${value.replaced_by}</td><td>${date[0]}</td></tr>`)
+                    })
+                })
+            }
+
+            
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                $('#subsitute').empty();
+                $('#subsitute').append($('<option></option>').val("").html("Select subsitute"))
+            })
+            $('#exampleModal5').on('hidden.bs.modal', function () {
+                $('#subsituteSP').empty();
+                $('#subsituteSP').append($('<option></option>').val("").html("Select subsitute"))
+            })
+
+            $('#exampleModal3').on('hidden.bs.modal', function () {
+                $('#suspendbody').empty();
+            })
+            $('#exampleModal6').on('hidden.bs.modal', function () {
+                $('#SPsuspendbody').empty();
+            })
+
+        </script>
+
+      
+    </body>
+
+</html>

@@ -1,0 +1,71 @@
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title" key="t-menu">Menu</li>
+                <li>
+                    <a href="/dashboard" class="waves-effect">
+                        <i class="bx bx-home-circle"></i>
+                        <span key="t-projects">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/leads" class="waves-effect">
+                        <i class="bx bx-home-circle"></i>
+                        <span key="t-projects">Enquiries</span>
+                    </a>
+                </li>
+                <%if(USERTYPE==1){%>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-ecommerce">Representtive</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="/cityHeads" key="t-products">City Head</a></li>
+                        <li><a href="/cityHeadDetails" key="t-product-detail">City Head Details</a></li>
+                        <li><a href="/salesPersons" key="t-orders">Sales Person</a></li>
+                    </ul>
+                </li>
+                <%}%>
+                <!-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-ecommerce">Enquiries</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="signup-enquiry.html" key="t-products">Signup Enquiries</a></li>
+                        <li><a href="online-enquiry.html" key="t-product-detail">Presentation Enquiries</a></li>
+                        <li><a href="site-visit-enquiry.html" key="t-orders">Site Visit Enquiries</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="users.html" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-projects">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="referrals.html" class="waves-effect">
+                        <i class="bx bx-share"></i>
+                        <span key="t-projects">Referrals</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="projects.html" class="waves-effect">
+                        <i class="bx bx-briefcase-alt-2"></i>
+                        <span key="t-projects">Published Projects</span>
+                    </a>
+                </li> -->
+
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
